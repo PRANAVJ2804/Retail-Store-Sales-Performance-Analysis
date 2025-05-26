@@ -1,0 +1,8 @@
+SELECT 
+	P.CATEGORY,
+    SUM(SA.QUANTITY_SOLD * SA.TOTAL_AMOUNT) AS Total_Revenue
+From 
+	Products P
+		Join Sales SA on P.product_id = SA.product_id
+Group by P.Category
+Order by Total_Revenue desc;
