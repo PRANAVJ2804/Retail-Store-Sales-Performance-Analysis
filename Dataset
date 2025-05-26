@@ -1,0 +1,69 @@
+# SAMPLE DATASET
+
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    gender VARCHAR(10),
+    age INT,
+    city VARCHAR(50)
+);
+
+INSERT INTO Customers (customer_id, name, gender, age, city) VALUES
+(1, 'Aarav Patel', 'Male', 28, 'Mumbai'),
+(2, 'Sneha Reddy', 'Female', 32, 'Hyderabad'),
+(3, 'Rahul Verma', 'Male', 24, 'Delhi'),
+(4, 'Ananya Sharma', 'Female', 30, 'Bangalore'),
+(5, 'Vikram Das', 'Male', 40, 'Kolkata');
+
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    category VARCHAR(50),
+    price DECIMAL(10, 2)
+);
+
+INSERT INTO Products (product_id, product_name, category, price) VALUES
+(101, 'LED TV', 'Electronics', 30000),
+(102, 'Washing Machine', 'Electronics', 25000),
+(103, 'T-Shirt', 'Apparel', 500),
+(104, 'Running Shoes', 'Footwear', 3000),
+(105, 'Refrigerator', 'Electronics', 35000);
+
+CREATE TABLE Stores (
+    store_id INT PRIMARY KEY,
+    store_name VARCHAR(100),
+    location VARCHAR(100)
+);
+
+INSERT INTO Stores (store_id, store_name, location) VALUES
+(201, 'Mega Mart - Mumbai', 'Mumbai'),
+(202, 'Super Retail - Delhi', 'Delhi'),
+(203, 'Trendz - Bangalore', 'Bangalore'),
+(204, 'BuyMore - Hyderabad', 'Hyderabad'),
+(205, 'ShopEasy - Kolkata', 'Kolkata');
+
+
+CREATE TABLE Sales (
+    sale_id INT PRIMARY KEY,
+    sale_date DATE,
+    product_id INT,
+    store_id INT,
+    customer_id INT,
+    quantity_sold INT,
+    total_amount DECIMAL(10,2),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id),
+    FOREIGN KEY (store_id) REFERENCES Stores(store_id),
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+INSERT INTO Sales (sale_id, sale_date, product_id, store_id, customer_id, quantity_sold, total_amount) VALUES
+(301, '2023-01-05', 101, 201, 1, 1, 30000),
+(302, '2023-01-15', 103, 202, 2, 3, 1500),
+(303, '2023-02-10', 104, 203, 3, 1, 3000),
+(304, '2023-02-18', 102, 204, 4, 1, 25000),
+(305, '2023-03-01', 105, 205, 5, 1, 35000),
+(306, '2023-03-10', 103, 201, 1, 2, 1000),
+(307, '2023-03-15', 104, 203, 2, 1, 3000),
+(308, '2023-04-02', 101, 204, 3, 1, 30000),
+(309, '2023-04-20', 102, 202, 4, 1, 25000),
+(310, '2023-05-05', 103, 205, 5, 5, 2500);
