@@ -1,0 +1,7 @@
+select 
+	DATE_FORMAT(SALE_DATE , '%Y-%M') AS `Month`,
+    sum(total_amount) as total_sales
+From 
+	Sales
+Group by `Month`
+Order by `Month`;
