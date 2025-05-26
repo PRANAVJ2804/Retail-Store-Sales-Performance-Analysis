@@ -1,0 +1,9 @@
+select
+	c.name,
+    count(sa.sale_id) as Purchases 
+From 
+	Customers c
+		Join Sales sa on c.customer_id = sa.customer_id
+group by c.name
+order by Purchases desc
+limit 3;
