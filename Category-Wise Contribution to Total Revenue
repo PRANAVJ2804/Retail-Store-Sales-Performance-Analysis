@@ -1,0 +1,17 @@
+WITH category_revenue AS (
+    SELECT 
+        p.category,
+        SUM(s.total_amount) AS category_total
+    FROM Sales s
+    JOIN Products p ON s.product_id = p.product_id
+    GROUP BY p.category
+),
+total_revenue AS (
+    SELECT SUM(category_total) AS overall_total FROM category_revenue
+)
+SELECT 
+    cr.category,
+    cr.category_total,
+    ROUND((cr.category_total / tr.overall_total) * 100, 2) AS percent_contribution
+FROM category_revenue cr
+CROSS JOIN total_revenue tr;
