@@ -1,0 +1,11 @@
+WITH customer_sales AS (
+    SELECT 
+        customer_id,
+        sale_date,
+        LAG(sale_date) OVER (PARTITION BY customer_id ORDER BY sale_date) AS prev_sale_date
+    FROM Sales
+)
+SELECT *,
+       DATEDIFF(sale_date, prev_sale_date) AS days_between
+FROM customer_sales
+WHERE prev_sale_date IS NOT NULL;
