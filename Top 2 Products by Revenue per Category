@@ -1,0 +1,17 @@
+WITH product_revenue AS (
+    SELECT 
+        p.category,
+        p.product_name,
+        SUM(s.total_amount) AS total_revenue
+    FROM Sales s
+    JOIN Products p ON s.product_id = p.product_id
+    GROUP BY p.category, p.product_name
+),
+ranked_products AS (
+    SELECT *,
+           DENSE_RANK() OVER (PARTITION BY category ORDER BY total_revenue DESC) AS rnk
+    FROM product_revenue
+)
+SELECT *
+FROM ranked_products
+WHERE rnk <= 2;
