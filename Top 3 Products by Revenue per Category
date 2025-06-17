@@ -1,0 +1,16 @@
+WITH product_revenue AS (
+  SELECT 
+    Product_Category,
+    Product_Name,
+    SUM(Quantity_Ordered * Price_Each) AS Total_Revenue
+  FROM retail_sales
+  GROUP BY Product_Category, Product_Name
+),
+ranked_products AS (
+  SELECT *,
+         DENSE_RANK() OVER (PARTITION BY Product_Category ORDER BY Total_Revenue DESC) AS revenue_rank
+  FROM product_revenue
+)
+SELECT * 
+FROM ranked_products
+WHERE revenue_rank <= 3;
