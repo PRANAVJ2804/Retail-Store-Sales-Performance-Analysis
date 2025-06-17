@@ -1,0 +1,16 @@
+WITH monthly_sales AS (
+    SELECT 
+        DATE_FORMAT(sale_date, '%Y-%m') AS month,
+        SUM(total_amount) AS revenue
+    FROM Sales
+    GROUP BY DATE_FORMAT(sale_date, '%Y-%m')
+),
+revenue_avg AS (
+    SELECT *,
+        ROUND(AVG(revenue) OVER (
+            ORDER BY month 
+            ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+        ), 2) AS moving_avg_3_month
+    FROM monthly_sales
+)
+SELECT * FROM revenue_avg;
